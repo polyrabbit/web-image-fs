@@ -32,6 +32,13 @@ func TestImageNode_FileName(t *testing.T) {
 			SelfLink: "https://l35h2znmhf1scosj14ztuxt1-wpengine.netdna-ssl.com/wp-content/themes/unherdv3/src/img/share-twitter.png",
 		}},
 		want: "AAA.png",
+	}, {
+		name: "Strip tail slash",
+		fields: fields{LinkNode: LinkNode{
+			Name:     "bb/AAA/",
+			SelfLink: "https://l35h2znmhf1scosj14ztuxt1-wpengine.netdna-ssl.com/wp-content/themes/unherdv3/src/img/share-twitter.png",
+		}},
+		want: "AAA.png",
 	},
 	}
 	for _, tt := range tests {

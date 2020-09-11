@@ -7,30 +7,44 @@ View my blog in your explorer/finder:
 ```bash
 $ imagefs -v /tmp/imagefs https://blog.betacat.io/post/2020/08/how-to-mount-etcd-as-a-filesystem/
 $ ls -alh
-total 0
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 ./
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 ../
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 1/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 2/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 About/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 Archives/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 EntryTimeout/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 FUSE/
--rw-r--r--  0 bytedance  staff   166K Sep 11 08:23 FUSE Stack.png
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 Home/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 Hugo/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 Kernel FUSE message format/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 TL;DR/
--rw-r--r--  0 bytedance  staff   256K Sep 11 08:23 VFS Read Operation.png
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 go-fuse/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 go-fuse Inode structure/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 inode/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 inode编号/
--rw-r--r--  0 bytedance  staff   216K Sep 11 08:23 open kubernetes etcd in vscode.png
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 沪ICP备17033881号-1/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 喵叔/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 总结/
-drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 文件系统相关的代码/
+total 648K
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 ./
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 ↩︎/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 1/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 2/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 3/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 About/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 Archives/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 CC BY-NC-ND 4.0/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 dentry cache/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 EntryTimeout/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 etcdfs/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 FUSE/
+-rw-r--r-- 0 poly poly 166K Sep 11 18:01 FUSE Stack.png
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 FUSE 文件系统/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 go-fuse/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 go-fuse Inode structure/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 Go-fuse 库/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 Home/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 Hugo/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 inode/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 inode编号/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 Jane/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 Kernel FUSE message format/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 OpCode enum/
+-rw-r--r-- 0 poly poly 217K Sep 11 18:01 open kubernetes etcd in vscode.png
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 sshfs/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 TL;DR/
+-rw-r--r-- 0 poly poly 257K Sep 11 18:01 VFS Read Operation.png
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 举个栗子/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 喵叔/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 喵叔没话说/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 工作原理/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 总结/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 文件系统相关的代码/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 沪ICP备17033881号-1/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 编写可测试 Go 代码的一种模式?            下一篇/
+drwxr-xr-x 0 poly poly    0 Sep 11 18:01 背景/
 ```
 
 ## Usage

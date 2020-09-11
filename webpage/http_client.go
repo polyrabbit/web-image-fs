@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -21,12 +22,12 @@ type HTTPClient struct {
 }
 
 func MustNewHTTPClient(host string, timeoutSeconds time.Duration) *HTTPClient {
+	if !strings.HasPrefix(host, "http") {
+		host = "http://" + host
+	}
 	u, err := url.Parse(host)
 	if err != nil {
 		panic(err)
-	}
-	if u.Scheme == "" {
-		u.Scheme = "http"
 	}
 	return &HTTPClient{
 		urlHost: u,

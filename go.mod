@@ -8,5 +8,4 @@ require (
 	github.com/polyrabbit/etcdfs v0.0.0-20200810033402-2ed0c102de71
 	github.com/sirupsen/logrus v1.6.0
 	github.com/spf13/cobra v0.0.3
-	go.etcd.io/etcd/v3 v3.3.0-rc.0.0.20200707003333-58bb8ae09f8e
 )

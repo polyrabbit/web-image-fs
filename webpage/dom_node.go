@@ -28,7 +28,7 @@ func (n *LinkNode) FileName() string {
 	if n.Name == "" {
 		n.Name = filepath.Base(n.SelfLink)
 	}
-	return strings.TrimSpace(n.Name)
+	return filepath.Base(strings.TrimSpace(n.Name))
 }
 
 func (n *LinkNode) GetSize() uint64 {
