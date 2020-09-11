@@ -42,8 +42,7 @@ func NewRoot(client *webpage.HTTPClient) *Node {
 	return &Node{
 		client: client,
 		domNode: &webpage.LinkNode{
-			Name:     "/",
-			SelfLink: "/",
+			Name: "/",
 		},
 	}
 }
@@ -115,41 +114,43 @@ func (n *Node) Getattr(ctx context.Context, fh fs.FileHandle, out *fuse.AttrOut)
 	return fs.OK
 }
 
-// Open gets value from etcd, and saves it in "content" for later read
-// func (n *Node) Open(ctx context.Context, flags uint32) (fh fs.FileHandle, fuseFlags uint32, errno syscall.Errno) {
-// 	if n.content == nil {
-// 		if rc, err := n.client.GetValue(ctx, n.path); err != nil {
-// 			logrus.WithError(err).WithField("path", n.path).Errorf("Failed to get value from etcd")
-// 			return nil, 0, syscall.EIO
-// 		} else {
-// 			n.rwMu.Lock()
-// 			n.content = rc
-// 			n.rwMu.Unlock()
-// 		}
-// 	}
-// 	logrus.WithField("path", n.path).WithField("length", len(n.content)).Debug("Node Open")
-// 	return n, fuse.FOPEN_DIRECT_IO, fs.OK
-// }
+// Open gets value via http, and saves it in "content" for later read
+func (n *Node) Open(ctx context.Context, flags uint32) (fh fs.FileHandle, fuseFlags uint32, errno syscall.Errno) {
+	logrus.WithField("url", n.domNode.GetLink()).Debug("Node Open")
+	if imgNode, ok := n.domNode.(*webpage.ImageNode); ok {
+		if len(imgNode.Content) == 0 {
+			content, err := n.client.Download(ctx, imgNode.GetLink())
+			if err != nil {
+				logrus.WithError(err).Errorf("Failed to download image content")
+				return nil, 0, syscall.EIO
+			}
+			imgNode.Content = content
+		}
+	}
+	return n, fuse.FOPEN_KEEP_CACHE, fs.OK
+}
+
 //
-// // Read returns bytes from "content", which should be filled by a prior Open operation
-// func (n *Node) Read(ctx context.Context, dest []byte, off int64) (fuse.ReadResult, syscall.Errno) {
-// 	n.rwMu.RLock()
-// 	defer n.rwMu.RUnlock()
-// 	logrus.WithField("path", n.path).Debug("Node Read")
-//
-// 	end := int(off) + len(dest)
-// 	if end > len(n.content) {
-// 		end = len(n.content)
-// 	}
-// 	// We could copy to the `dest` buffer, but since we have a
-// 	// []byte already, return that.
-// 	return fuse.ReadResultData(n.content[off:end]), fs.OK
-// }
+// Read returns bytes from "content", which should be filled by a prior Open operation
+func (n *Node) Read(ctx context.Context, dest []byte, off int64) (fuse.ReadResult, syscall.Errno) {
+	logrus.WithField("url", n.domNode.GetLink()).Debug("Node Read")
+	if imgNode, ok := n.domNode.(*webpage.ImageNode); !ok {
+		return nil, syscall.EIO
+	} else {
+		end := int(off) + len(dest)
+		if end > len(imgNode.Content) {
+			end = len(imgNode.Content)
+		}
+		// We could copy to the `dest` buffer, but since we have a
+		// []byte already, return that.
+		return fuse.ReadResultData(imgNode.Content[off:end]), fs.OK
+	}
+}
 
 var (
 	_ fs.NodeGetattrer = &Node{}
 	_ fs.NodeReaddirer = &Node{}
-	// _ fs.NodeLookuper  = &Node{}
-	// _ fs.NodeOpener = &Node{}
-	// _ fs.FileReader = &Node{}
+	_ fs.NodeLookuper  = &Node{}
+	_ fs.NodeOpener    = &Node{}
+	_ fs.FileReader    = &Node{}
 )

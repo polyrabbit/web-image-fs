@@ -4,7 +4,6 @@ import (
 	"hash/fnv"
 	"path/filepath"
 	"strings"
-	"sync"
 	"syscall"
 )
 
@@ -58,10 +57,8 @@ func (n *LinkNode) InodeHash() uint64 {
 type ImageNode struct {
 	LinkNode
 	Size        uint64
-	contentType string
-
-	rwMu    sync.RWMutex // Protect file content
-	content []byte       // Internal buffer to hold the current file content
+	Content     []byte // Internal buffer to hold the current file content
+	ContentType string // Http content-type header, used for deducing file suffix
 }
 
 func (n *ImageNode) FileName() string {
@@ -74,7 +71,7 @@ func (n *ImageNode) FileName() string {
 			//TODO: deduce by content-type
 		}
 	}
-	return fname
+	return filepath.Base(fname)
 }
 
 func (n *ImageNode) GetSize() uint64 {

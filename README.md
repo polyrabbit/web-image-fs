@@ -8,29 +8,29 @@ View my blog in your explorer/finder:
 $ imagefs -v /tmp/imagefs https://blog.betacat.io/post/2020/08/how-to-mount-etcd-as-a-filesystem/
 $ ls -alh
 total 0
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 ./
-drwxrwxrwt  17 root       wheel   544B Sep 10 23:23 ../
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 3/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 About/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 Archives/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 Go-fuse 库/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 Home/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 Jane/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 dentry cache/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 etcdfs/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 go-fuse Inode structure/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 inode/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 inode编号/
--rw-r--r--   0 bytedance  staff     0B Sep 10 23:41 open kubernetes etcd in vscode.png
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 sshfs/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 沪ICP备17033881号-1/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 ↩︎/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 喵叔/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 总结/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 背景/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 举个栗子/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 喵叔没话说/
-drwxr-xr-x   0 bytedance  staff     0B Sep 10 23:41 编写可测试 Go 代码的一种模式?            下一篇/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 ./
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 ../
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 1/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 2/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 About/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 Archives/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 EntryTimeout/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 FUSE/
+-rw-r--r--  0 bytedance  staff   166K Sep 11 08:23 FUSE Stack.png
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 Home/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 Hugo/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 Kernel FUSE message format/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 TL;DR/
+-rw-r--r--  0 bytedance  staff   256K Sep 11 08:23 VFS Read Operation.png
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 go-fuse/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 go-fuse Inode structure/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 inode/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 inode编号/
+-rw-r--r--  0 bytedance  staff   216K Sep 11 08:23 open kubernetes etcd in vscode.png
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 沪ICP备17033881号-1/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 喵叔/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 总结/
+drwxr-xr-x  0 bytedance  staff     0B Sep 11 08:23 文件系统相关的代码/
 ```
 
 ## Usage
@@ -56,7 +56,7 @@ This tool uses a simple html parser called [goquery](https://github.com/Puerkito
 
 ## TODO
 
-- [ ] Prefetch image stats using a `HEAD` request
+- [x] ~~Prefetch image stats using a `HEAD` request~~
 - [ ] Detect file extension using `content-type` header
 - [ ] Use a cache library for `DomNode` objects
 - [ ] `DomNode` should contain an absolute self link url
