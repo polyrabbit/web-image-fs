@@ -47,7 +47,7 @@ func NewRoot(client *webpage.HTTPClient, rootDom webpage.DomNode) *Node {
 
 // List keys under a certain prefix from etcd, and output the next hierarchy level
 func (n *Node) Readdir(ctx context.Context) (fs.DirStream, syscall.Errno) {
-	logrus.WithField("url", n.domNode.GetLink()).Debug("Node Readdir")
+	logrus.WithField("name", n.domNode.FileName()).WithField("url", n.domNode.GetLink()).Debug("Node Readdir")
 	domNodes, err := n.GetChildren(ctx)
 	if err != nil {
 		logrus.WithError(err).WithField("url", n.domNode.GetLink()).Errorf("Failed to get node's children")
@@ -67,7 +67,7 @@ func (n *Node) Readdir(ctx context.Context) (fs.DirStream, syscall.Errno) {
 
 // Lookup finds a file under the current node(directory)
 func (n *Node) Lookup(ctx context.Context, name string, out *fuse.EntryOut) (*fs.Inode, syscall.Errno) {
-	logrus.WithField("name", name).WithField("url", n.domNode.GetLink()).Debug("Node Lookup")
+	logrus.WithField("name", name).WithField("parent", n.domNode.FileName()).Debug("Node Lookup")
 	children, err := n.GetChildren(ctx)
 	if err != nil {
 		logrus.WithError(err).WithField("url", n.domNode.GetLink()).Errorf("Failed to get node's children")

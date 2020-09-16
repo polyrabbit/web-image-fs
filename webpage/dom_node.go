@@ -46,7 +46,11 @@ func (n *LinkNode) FileName() string {
 		}
 		n.Name = filepath.Base(urlPath)
 	}
-	return filepath.Base(strings.TrimSpace(n.Name))
+	n.Name = strings.TrimSpace(n.Name)
+	if n.Name == "" {
+		return ""
+	}
+	return filepath.Base(n.Name)
 }
 
 func (n *LinkNode) GetSize() uint64 {

@@ -42,7 +42,7 @@ func (c *HTTPClient) Parse(ctx context.Context, absURL string) ([]DomNode, error
 	var doms []DomNode
 	// First, find all images
 	doc.Find("img[src]").Each(func(i int, s *goquery.Selection) {
-		if imgPath, exists := s.Attr("src"); exists {
+		if imgPath, exists := s.Attr("src"); exists && imgPath != "" {
 			if strings.HasPrefix(imgPath, "data:") { // TODO: should support base64-encoded image
 				return
 			}
@@ -61,7 +61,7 @@ func (c *HTTPClient) Parse(ctx context.Context, absURL string) ([]DomNode, error
 			} else {
 				logrus.WithError(err).WithField("path", imgPath).Debug("Failed to get image header")
 			}
-			doms = append(doms, &ImageNode{
+			imgNode := ImageNode{
 				// TODO: fix duplicated names
 				LinkNode: LinkNode{
 					Name: s.AttrOr("alt", ""),
@@ -70,13 +70,16 @@ func (c *HTTPClient) Parse(ctx context.Context, absURL string) ([]DomNode, error
 				},
 				Size:        uint64(contentLength),
 				ContentType: contentType,
-			})
+			}
+			if imgNode.FileName() != "" {
+				doms = append(doms, &imgNode)
+			}
 		}
 	})
 
 	// Then, find all links/directories
 	doc.Find("a[href]").Each(func(i int, s *goquery.Selection) {
-		if linkPath, exists := s.Attr("href"); exists {
+		if linkPath, exists := s.Attr("href"); exists && linkPath != "" {
 			if strings.HasPrefix(linkPath, "#") || strings.HasPrefix(linkPath, "javascript:") {
 				return
 			}
@@ -85,11 +88,14 @@ func (c *HTTPClient) Parse(ctx context.Context, absURL string) ([]DomNode, error
 				logrus.WithError(err).WithField("path", linkPath).Debug("Failed to join link url")
 				return
 			}
-			doms = append(doms, &LinkNode{
+			linkNode := LinkNode{
 				// TODO: fix duplicated names
 				Name:     s.Text(),
 				SelfLink: linkURL,
-			})
+			}
+			if linkNode.FileName() != "" {
+				doms = append(doms, &linkNode)
+			}
 		}
 	})
 	return doms, nil
@@ -115,6 +121,7 @@ func (c *HTTPClient) Download(ctx context.Context, absURL string) ([]byte, error
 }
 
 func (c *HTTPClient) Fetch(ctx context.Context, method, absURL string) (*http.Response, error) {
+	logrus.WithField("url", absURL).WithField("method", method).Debug("HTTPClient fetch")
 	req, err := http.NewRequestWithContext(ctx, method, absURL, nil)
 	if err != nil {
 		return nil, fmt.Errorf("http.NewRequestWithContext: %w", err)
