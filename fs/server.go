@@ -18,7 +18,7 @@ type Server struct {
 	mountPoint string
 }
 
-func MustMount(mountPoint string, client *webpage.HTTPClient) *Server {
+func MustMount(mountPoint string, client *webpage.HTTPClient, rootDom webpage.DomNode) *Server {
 	opts := &fs.Options{
 		MountOptions: fuse.MountOptions{
 			Options: config.MountOptions,
@@ -26,7 +26,7 @@ func MustMount(mountPoint string, client *webpage.HTTPClient) *Server {
 			FsName:  "imagefs",
 		},
 	}
-	server, err := fs.Mount(mountPoint, NewRoot(client), opts)
+	server, err := fs.Mount(mountPoint, NewRoot(client, rootDom), opts)
 	if err != nil {
 		logrus.WithError(err).Fatal("Failed to mount")
 		return nil

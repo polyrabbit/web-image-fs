@@ -18,8 +18,11 @@ func main() {
 		logrus.WithError(err).WithField("mountPoint", mountPoint).Fatal("Failed to get abs file path")
 		return
 	}
-	httpClient := webpage.MustNewHTTPClient(config.BaseURL, config.Timeout)
-	server := fs.MustMount(mountPoint, httpClient)
+
+	httpClient := webpage.NewHTTPClient(config.Timeout)
+	rootDom := webpage.MustNewRootDom(config.BaseURL)
+	server := fs.MustMount(mountPoint, httpClient, rootDom)
+
 	go server.ListenForUnmount()
 	logrus.Infof("Mounted to %q, use ctrl+c to terminate.", mountPoint)
 	server.Wait()

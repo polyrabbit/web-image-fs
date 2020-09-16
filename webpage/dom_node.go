@@ -2,6 +2,7 @@ package webpage
 
 import (
 	"hash/fnv"
+	"net/url"
 	"path/filepath"
 	"strings"
 	"syscall"
@@ -18,6 +19,19 @@ type DomNode interface {
 	InodeHash() uint64
 }
 
+func MustNewRootDom(baseURL string) *LinkNode {
+	if !strings.HasPrefix(baseURL, "http") {
+		baseURL = "http://" + baseURL
+	}
+	if _, err := url.Parse(baseURL); err != nil {
+		panic(err)
+	}
+	return &LinkNode{
+		Name:     "/",
+		SelfLink: baseURL,
+	}
+}
+
 // LinkNode represents a a-link node
 type LinkNode struct {
 	Name     string
@@ -26,7 +40,11 @@ type LinkNode struct {
 
 func (n *LinkNode) FileName() string {
 	if n.Name == "" {
-		n.Name = filepath.Base(n.SelfLink)
+		urlPath := n.SelfLink // TODO: SelfLink should be a URL object
+		if u, err := url.Parse(urlPath); err == nil {
+			urlPath = u.Path
+		}
+		n.Name = filepath.Base(urlPath)
 	}
 	return filepath.Base(strings.TrimSpace(n.Name))
 }

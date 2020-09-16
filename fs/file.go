@@ -38,12 +38,10 @@ type Node struct {
 }
 
 // NewRoot returns a file node - acting as a root, with inode sets to 1 and leaf sets to false
-func NewRoot(client *webpage.HTTPClient) *Node {
+func NewRoot(client *webpage.HTTPClient, rootDom webpage.DomNode) *Node {
 	return &Node{
-		client: client,
-		domNode: &webpage.LinkNode{
-			Name: "/",
-		},
+		client:  client,
+		domNode: rootDom,
 	}
 }
 
@@ -69,7 +67,7 @@ func (n *Node) Readdir(ctx context.Context) (fs.DirStream, syscall.Errno) {
 
 // Lookup finds a file under the current node(directory)
 func (n *Node) Lookup(ctx context.Context, name string, out *fuse.EntryOut) (*fs.Inode, syscall.Errno) {
-	logrus.WithField("url", n.domNode.GetLink()).Debug("Node Lookup")
+	logrus.WithField("name", name).WithField("url", n.domNode.GetLink()).Debug("Node Lookup")
 	children, err := n.GetChildren(ctx)
 	if err != nil {
 		logrus.WithError(err).WithField("url", n.domNode.GetLink()).Errorf("Failed to get node's children")

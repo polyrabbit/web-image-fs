@@ -73,7 +73,7 @@ This tool uses a simple html parser called [goquery](https://github.com/Puerkito
 - [x] ~~Prefetch image stats using a `HEAD` request~~
 - [ ] Detect file extension using `content-type` header
 - [ ] Use a cache library for `DomNode` objects
-- [ ] `DomNode` should contain an absolute self link url
+- [x] ~~`DomNode` should contain an absolute self link url~~
 
 ## License
 
